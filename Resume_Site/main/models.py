@@ -2,6 +2,7 @@ from distutils.command import upload
 import email
 from email import message
 from email.mime import image
+from email.quoprimime import quote
 from operator import mod
 from tabnanny import verbose
 from time import time
@@ -56,6 +57,46 @@ class ContactProfile(models.Model):
 
   def __str__(self):
       return f'{self.name}'
+
+class Testimonial(models.Model):
+
+  class Meta:
+    verbose_name_plural = 'Testimonials'
+    verbose_name = 'Testimonial'
+    orderig = ['name']
+
+  thumbnail = models.ImageField(black=True, null=True, upload_to='testimonials')
+  name = models.CharField(max_length=150, blank=True, null=True)
+  role = models.CharField(max_length=150, blank=True, null=True)
+  quote = models.CharField(max_length=150, blank=True, null=True)
+  is_active = models.BooleanField(default=True)
+
+  def __str__(self):
+      return self.name
+
+class Media(models.Model):
+
+  class Meta:
+    verbose_name_plural = 'Media Files'
+    verbose_name = 'Media File'
+    orderig = ['name']
+  
+  image = models.ImageField(blank=True, null=True, upload_to='media')
+  url = models.URLField(blank=True, null=True)
+  name =- models.CharField(max_length=150, blank=True, null=True)
+  is_image = models.BooleanField(default=True)
+
+  def save(self, *args, **kwargs):
+    if self.url:
+      self.is_image = False
+      super(Media, self).save(*args, **kwargs)
+
+  def __str__(self):
+      return self.name
+  
+
+
+  
   
   
   
