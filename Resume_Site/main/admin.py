@@ -26,3 +26,8 @@ class TestimonialAdmin(admin.ModelAdmin):
 @admin.register(Media)
 class MediaAdmin(admin.ModelAdmin):
   list_display = ('id', 'name')
+
+@admin.register(Portfolio)
+class PortfoliolAdmin(admin.ModelAdmin):
+  list_display = ('id', 'name', 'is_active')
+  readonly_fields = ('sluq')
